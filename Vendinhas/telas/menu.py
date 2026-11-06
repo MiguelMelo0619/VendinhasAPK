@@ -1,16 +1,17 @@
 import flet as ft
 
+import ui_comum
+
 
 def criar_menu(page, mostrar_vendas, mostrar_produtos, mostrar_caixa):
     def menu_principal(e=None):
-        page.controls.clear()
-        page.add(ft.Column([
-            ft.Text("Vendinhas", size=40, weight="bold", font_family="Cursiva"),
+        ui_comum.mostrar(
+            page,
+            ft.Text("Vendinhas", size=40, weight="bold", font_family="Cursiva", text_align="center"),
             ft.Divider(height=25, color="transparent"),
-            ft.FilledButton("Vendas", icon=ft.Icons.POINT_OF_SALE, on_click=mostrar_vendas, height=52),
-            ft.FilledButton("Produtos", icon=ft.Icons.INVENTORY_2_OUTLINED, on_click=mostrar_produtos, height=52),
-            ft.FilledButton("Caixa", icon=ft.Icons.ACCOUNT_BALANCE_WALLET, on_click=mostrar_caixa, height=52),
-        ], horizontal_alignment="center", spacing=14))
-        page.update()
+            ui_comum.botao("Vendas", ft.Icons.POINT_OF_SALE, mostrar_vendas),
+            ui_comum.botao("Produtos", ft.Icons.INVENTORY_2_OUTLINED, mostrar_produtos),
+            ui_comum.botao("Caixa", ft.Icons.ACCOUNT_BALANCE_WALLET, mostrar_caixa),
+        )
 
     return menu_principal

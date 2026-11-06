@@ -1,5 +1,5 @@
 ```py
-meu_app/
+Vendinhas/
   main.py          # ponto de entrada: configura a página e monta as telas
   constantes.py    # chaves de armazenamento e denominações do caixa
   formatacao.py    # moeda, ler_preco, ler_quantidade

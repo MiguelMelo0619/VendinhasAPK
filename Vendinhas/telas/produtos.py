@@ -64,6 +64,7 @@ def criar_produtos(page, estado, voltar):
         campo_nome.value = p["nome"] if p else ""
         campo_preco.value = f"{p['preco'] / 100:.2f}".replace(".", ",") if p else ""
         campo_vendedor.value = f"{p['vendedor'] / 100:.2f}".replace(".", ",") if p else ""
+        ui_comum.preparar_dialogo(page, editor_dialog)
         abrir(editor_dialog)
 
     async def salvar_produto(e):
@@ -99,7 +100,7 @@ def criar_produtos(page, estado, voltar):
     editor_dialog = ft.AlertDialog(
         modal=True,
         title=ft.Text("Novo produto"),
-        content=ft.Container(width=300, content=ft.Column(
+        content=ft.Container(content=ft.Column(
             [campo_nome, campo_preco, campo_vendedor], tight=True, spacing=12
         )),
         actions=[
@@ -134,10 +135,10 @@ def criar_produtos(page, estado, voltar):
     )
 
     def mostrar_produtos(e=None):
-        page.controls.clear()
-        page.add(
+        ui_comum.mostrar(
+            page,
             cabecalho("Produtos"),
-            ft.FilledButton("Novo produto", icon=ft.Icons.ADD, on_click=lambda e: abrir_editor()),
+            ui_comum.botao("Novo produto", ft.Icons.ADD, lambda e: abrir_editor()),
             ft.Divider(),
             catalogo_lista,
         )
