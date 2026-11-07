@@ -22,7 +22,7 @@ def criar_caixa(page, estado, voltar):
     # CAIXA: mantido independente do registro de vendas
     # ----------------------------------------------------------
     texto_total_caixa = ft.Text(weight="bold", size=21, color="#4ade80")
-    grid_caixa = ft.Row(wrap=True, alignment="center")
+    grid_caixa = ft.ResponsiveRow(spacing=8, run_spacing=8)
     campos_caixa = {}
     linhas_caixa = ft.Column(spacing=4, scroll="auto")
 
@@ -34,7 +34,7 @@ def criar_caixa(page, estado, voltar):
             if caixa[str(d)] > 0:
                 grid_caixa.controls.append(ft.Container(
                     content=ft.Text(f"{moeda(d)}\n{caixa[str(d)]} un", text_align="center", color="#0f172a"),
-                    bgcolor="#e2e8f0", padding=12, border_radius=8, width=100,
+                    bgcolor="#e2e8f0", padding=12, border_radius=8, col={"xs": 6, "sm": 4},
                 ))
         if not grid_caixa.controls:
             grid_caixa.controls.append(ft.Text("A carteira está vazia."))
@@ -44,7 +44,7 @@ def criar_caixa(page, estado, voltar):
         campos_caixa.clear()
         linhas_caixa.controls.clear()
         for d in DENOMINACOES:
-            campo = ft.TextField(value="0", width=60, text_align="center", keyboard_type=ft.KeyboardType.NUMBER, dense=True)
+            campo = ft.TextField(value="0", width=56, text_align="center", keyboard_type=ft.KeyboardType.NUMBER, dense=True)
             campos_caixa[d] = campo
 
             def alterar(delta, c=campo):
@@ -61,6 +61,7 @@ def criar_caixa(page, estado, voltar):
                 campo,
                 ft.IconButton(ft.Icons.ADD_CIRCLE_OUTLINE, on_click=lambda e, f=alterar: f(1)),
             ]))
+        ui_comum.preparar_dialogo(page, caixa_dialog, altura=390)
         abrir(caixa_dialog)
 
     async def movimentar_caixa(e, sinal):
@@ -87,7 +88,7 @@ def criar_caixa(page, estado, voltar):
 
     caixa_dialog = ft.AlertDialog(
         modal=True, title=ft.Text("Movimentação do caixa"),
-        content=ft.Container(content=linhas_caixa, width=300, height=390),
+        content=ft.Container(content=linhas_caixa),
         actions=[
             ft.TextButton("Cancelar", on_click=lambda e: fechar(caixa_dialog)),
             ft.TextButton("Subtrair", on_click=retirar_do_caixa),
@@ -96,12 +97,12 @@ def criar_caixa(page, estado, voltar):
     )
 
     def mostrar_caixa(e=None):
-        page.controls.clear()
-        page.add(
+        ui_comum.mostrar(
+            page,
             cabecalho("Caixa"),
             ft.Text("Total em caixa", size=14, weight="bold"),
             texto_total_caixa,
-            ft.FilledButton("Movimentação (+ / -)", icon=ft.Icons.SYNC_ALT, on_click=abrir_movimentacao, height=50),
+            ui_comum.botao("Movimentação (+ / -)", ft.Icons.SYNC_ALT, abrir_movimentacao),
             ft.Divider(),
             ft.Text("Detalhes da carteira", weight="bold"),
             grid_caixa,

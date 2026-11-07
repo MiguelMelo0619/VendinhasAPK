@@ -1,6 +1,7 @@
 import flet as ft
 
 from estado import Estado
+import ui_comum
 from telas.caixa import criar_caixa
 from telas.menu import criar_menu
 from telas.produtos import criar_produtos
@@ -14,6 +15,8 @@ async def main(page: ft.Page):
     page.fonts = {
         "Cursiva": "https://raw.githubusercontent.com/google/fonts/main/ofl/lobstertwo/LobsterTwo-Regular.ttf"
     }
+
+    ui_comum.ao_redimensionar(page)
 
     estado = Estado()
     await estado.carregar_tudo()

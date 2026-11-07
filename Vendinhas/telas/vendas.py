@@ -127,7 +127,7 @@ def criar_vendas(page, estado, voltar):
 
         editando_venda_id = venda_id
         venda_dialog.title.value = "Editar venda" if venda else "Registrar venda"
-        botao_confirmar.text = "Salvar alterações" if venda else "Confirmar"
+        botao_confirmar.content ="Salvar alterações" if venda else "Confirmar"
         campos_qtd.clear()
         produtos_para_adicionar.clear()
 
@@ -152,6 +152,7 @@ def criar_vendas(page, estado, voltar):
             # Em um novo registro, todos os produtos ficam disponíveis.
             linhas_venda.controls = [criar_linha_venda(p) for p in produtos]
 
+        ui_comum.preparar_dialogo(page, venda_dialog, altura=430)
         abrir(venda_dialog)
 
     async def registrar_venda(e):
@@ -228,8 +229,6 @@ def criar_vendas(page, estado, voltar):
         title=ft.Text("Registrar venda", size=20, weight="bold"),
         content=ft.Container(
             content=linhas_venda,
-            width=340,
-            height=430,
             padding=ft.Padding(top=6, left=0, right=0, bottom=0),
         ),
         actions=[
@@ -313,13 +312,11 @@ def criar_vendas(page, estado, voltar):
     )
 
     def mostrar_vendas(e=None):
-        page.controls.clear()
-        page.add(
+        ui_comum.mostrar(
+            page,
             cabecalho("Vendas"),
-            ft.FilledButton("Registrar venda", icon=ft.Icons.ADD_SHOPPING_CART,
-                            on_click=abrir_venda, height=50, width=260),
-            ft.OutlinedButton("Zerar vendas", icon=ft.Icons.DELETE_FOREVER,
-                              on_click=lambda e: abrir(reset_dialog)),
+            ui_comum.botao("Registrar venda", ft.Icons.ADD_SHOPPING_CART, abrir_venda),
+            ui_comum.botao("Zerar vendas", ft.Icons.DELETE_FOREVER, lambda e: abrir(reset_dialog), destaque=False),
             ft.Divider(),
             ft.Text("Quantidades vendidas", weight="bold"),
             texto_resumo,

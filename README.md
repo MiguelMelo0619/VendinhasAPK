@@ -21,10 +21,10 @@ pip install flet
 ## Rodar no PC
 
 ```bash
-flet run meu_app/main.py
+flet run Vendinhas/main.py
 ```
 
-Abre uma janela do app. Sem o `flet` no PATH, use `python meu_app/main.py`.
+Abre uma janela do app. Sem o `flet` no PATH, use `python Vendinhas/main.py`.
 
 ## Rodar no celular
 
@@ -32,7 +32,7 @@ Abre uma janela do app. Sem o `flet` no PATH, use `python meu_app/main.py`.
 2. Com o PC e o celular na mesma rede Wi-Fi, rode:
 
 ```bash
-flet run --android meu_app/main.py
+flet run --android Vendinhas/main.py
 ```
 
 (use `--ios` no iPhone)
